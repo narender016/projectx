@@ -22,7 +22,7 @@ router.patch('/api/org/:id',updateOrgSingleField)//patch
 
 
 //login
-router.get('/api/orgLogin',loginOrg)
+router.post('/api/orgLogin',loginOrg)
 
 
 
