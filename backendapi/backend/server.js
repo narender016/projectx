@@ -5,14 +5,24 @@ const Org = require("./models/orgModel");
 const dotenv=require("dotenv").config();
 const taskRoutes=require('./routes/taskRoutes');
 const orgRoutes=require('./routes/orgRoutes');
-
+const cors = require('cors')
 const app=express();
+
+
+const corsOptions = {
+    origin: 'http://localhost:4200/', // Replace with the allowed origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  };
+
+  app.use(cors(corsOptions)); 
 
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(taskRoutes);
 app.use(orgRoutes);
+
+
 
 //routes
 app.get('/',(req,res)=>{
