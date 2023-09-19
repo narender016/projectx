@@ -5,6 +5,7 @@ const Org = require("./models/orgModel");
 const dotenv=require("dotenv").config();
 const taskRoutes=require('./routes/taskRoutes');
 const orgRoutes=require('./routes/orgRoutes');
+const batchRoutes=require('./routes/batchRoutes');
 const cors = require('cors')
 const app=express();
 
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(taskRoutes);
 app.use(orgRoutes);
-
+app.use(batchRoutes);
 
 
 //routes
