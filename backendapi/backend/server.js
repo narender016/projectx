@@ -6,6 +6,7 @@ const dotenv=require("dotenv").config();
 const taskRoutes=require('./routes/taskRoutes');
 const orgRoutes=require('./routes/orgRoutes');
 const batchRoutes=require('./routes/batchRoutes');
+const teacherRoutes=require('./routes/teacherRoutes');
 const cors = require('cors')
 const app=express();
 
@@ -23,11 +24,12 @@ app.use(express.urlencoded({extended:false}));
 app.use(taskRoutes);
 app.use(orgRoutes);
 app.use(batchRoutes);
+app.use(teacherRoutes);
 
 
 //routes
 app.get('/',(req,res)=>{
-res.send("home page");
+res.send("Server Running..");
 })
 
 const PORT=process.env.PORT || 5000;

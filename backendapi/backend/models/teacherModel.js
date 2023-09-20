@@ -1,3 +1,5 @@
+const mongoose=require("mongoose");
+
 const TeacherSchema = mongoose.Schema(
     {
       name: {
@@ -22,7 +24,8 @@ const TeacherSchema = mongoose.Schema(
       
       subjectsTaught: [String],
       profilePicture: String, // URL or reference to profile picture
-      
+      batches:[String],
+      deleted: { type: Boolean, default: false },
     },
     {
       timestamps: true
