@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const batchSchema = new mongoose.Schema(
   {
     name: {
@@ -23,25 +24,17 @@ const batchSchema = new mongoose.Schema(
       enum: ['MWF', 'TTS', 'Weekdays', 'Weekend'], // Enumerated values for batch days
       required: [true, "Please add batchDays"]
     },
-    teacherid:{
-      type:String,
-      default:"null"
-    },
-    assign:{
-      type:String,
-      default:"null"
-    }
-    // teacher: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Teacher", // Reference to the Teacher model
-    //   required: [true, "Please add Teacher"]
+    teacher: Object,
+    students: [Object],
+    // teacherid:{
+    //   type:String,
+    //   default:"null"
     // },
-    // students: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Student" // Reference to the Student model
-    //   }
-    // ]
+    // assign:{
+    //   type:String,
+    //   default:"null"
+    // }
+   
   },
   {
     timestamps: true
