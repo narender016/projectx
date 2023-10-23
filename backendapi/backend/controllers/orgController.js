@@ -1,5 +1,6 @@
 const Org = require("../models/orgModel");
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const createOrg = async (req, res) => {
     try {
         const result = await Org.create(req.body);
@@ -25,7 +26,10 @@ const loginOrg = async (req, res) => {
         if (result.length==0) {
             return res.status(404).json(`Invalid credential`);
         }
-        res.status(200).json("Success Login");
+        const token = jwt.sign({ email: req.body.email }, 'mysecretkey',{ expiresIn: '1m' }); // Use your own secret
+        const refreshToken = jwt.sign({ username: req.body.email }, 'refreshkey',{ expiresIn: '1d' });
+        res.status(200).json({'message':"success", 'token':token,"refreshToken":refreshToken });
+        //res.status(200).json("Success Login");
     } catch (err) {
         res.status(500).json({ msg: err.message })
     }

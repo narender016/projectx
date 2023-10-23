@@ -32,6 +32,20 @@ app.get('/',(req,res)=>{
 res.send("Server Running..");
 })
 
+app.post('/Refreshtoken', (req, res) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+        return res.sendStatus(401);
+    }
+    jwt.verify(refreshToken, 'refreshkey', (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+        const accessToken = jwt.sign({ username: 'test' }, "refreshkey", { expiresIn: '20m' });//you have to get username/email from token 
+        res.json({ accessToken });
+    });
+});
+
 const PORT=process.env.PORT || 5000;
 
 mongoose
