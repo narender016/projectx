@@ -35,6 +35,29 @@ const loginOrg = async (req, res) => {
     }
 }
 
+const refreshtoken = async (req, res) => {
+    
+    try {
+        const { refreshToken } = req.body;
+        console.log(refreshToken)
+        if (!refreshToken) {
+            return res.sendStatus(401);
+        }
+        jwt.verify(refreshToken, 'refreshkey', (err, user) => {
+           // console.log(user.username)
+            if (err) {
+                return res.sendStatus(403);
+            }else if(!user.username){
+                return res.sendStatus(403);
+            }
+            const accessToken = jwt.sign({ username: user.username }, "mysecretkey", { expiresIn: '1m' });//you have to get username/email from token 
+            res.json({ accessToken });
+        });
+    } catch (err) {
+        res.status(500).json({ msg: err.message })
+    }
+}
+
 const getSingleOrg = async (req, res) => {
     try {
         const { id } = req.params;
@@ -94,4 +117,4 @@ const updateOrgSingleField = async (req, res) => {
         res.status(500).json({ msg: error.message })
     }
 }
-module.exports = { createOrg, getOrg, getSingleOrg, deleteOrg,updateOrg,updateOrgSingleField,loginOrg }
+module.exports = { createOrg, getOrg, getSingleOrg, deleteOrg,updateOrg,updateOrgSingleField,loginOrg,refreshtoken }

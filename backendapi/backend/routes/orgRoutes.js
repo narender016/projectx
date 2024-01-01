@@ -1,11 +1,14 @@
 const express=require("express");
 const Org = require("../models/orgModel");
-const { createOrg, getOrg, getSingleOrg, deleteOrg, updateOrg, updateOrgSingleField, loginOrg } = require("../controllers/orgController");
+const { createOrg, getOrg, getSingleOrg, deleteOrg, updateOrg, updateOrgSingleField, loginOrg,refreshtoken } = require("../controllers/orgController");
 const router=express.Router()
 
 
 // create a task
 router.post('/api/org',createOrg)
+
+//refresh token
+router.post('/refresh',refreshtoken)
 
 // Get/read all task
 router.get('/api/org',getOrg)
