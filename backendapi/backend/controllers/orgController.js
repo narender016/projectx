@@ -26,8 +26,8 @@ const loginOrg = async (req, res) => {
         if (result.length==0) {
             return res.status(404).json(`Invalid credential`);
         }
-        const token = jwt.sign({ email: req.body.email }, 'mysecretkey',{ expiresIn: '1m' }); // Use your own secret
-        const refreshToken = jwt.sign({ username: req.body.email }, 'refreshkey',{ expiresIn: '1d' });
+        const token = jwt.sign({ email: req.body.email }, process.env.access_Token_Key ,{ expiresIn: process.env.accessTokenExpire }); // Use your own secret
+        const refreshToken = jwt.sign({ username: req.body.email }, process.env.refresh_Token_key,{ expiresIn: process.env.refreshTokenExpire });
         res.status(200).json({'message':"success", 'token':token,"refreshToken":refreshToken });
         //res.status(200).json("Success Login");
     } catch (err) {
@@ -43,14 +43,14 @@ const refreshtoken = async (req, res) => {
         if (!refreshToken) {
             return res.sendStatus(401);
         }
-        jwt.verify(refreshToken, 'refreshkey', (err, user) => {
+        jwt.verify(refreshToken, process.env.refresh_Token_key, (err, user) => {
            // console.log(user.username)
             if (err) {
                 return res.sendStatus(403);
             }else if(!user.username){
                 return res.sendStatus(403);
             }
-            const accessToken = jwt.sign({ username: user.username }, "mysecretkey", { expiresIn: '1m' });//you have to get username/email from token 
+            const accessToken = jwt.sign({ username: user.username }, process.env.access_Token_Key, { expiresIn: process.env.accessTokenExpire });//you have to get username/email from token 
             res.json({ accessToken });
         });
     } catch (err) {
