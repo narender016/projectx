@@ -18,7 +18,7 @@ const corsOptions = {
 
   app.use(cors(corsOptions)); 
 
-//Middleware--
+//Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(taskRoutes);
