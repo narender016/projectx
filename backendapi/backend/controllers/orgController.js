@@ -1,26 +1,27 @@
 const Org = require("../models/orgModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const createOrg = async (req, res) => {
+const createOrg = async (req, res, next) => {
     try {
         const result = await Org.create(req.body);
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({ msg: err.message })
+        next(err)
+        //res.status(500).json({ msg: err.message })
     }
 }
 
 
-const getOrg = async (req, res) => {
+const getOrg = async (req, res, next) => {
     try {
         const result = await Org.find();
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({ msg: err.message })
+        next(err)
     }
 }
 
-const loginOrg = async (req, res) => {
+const loginOrg = async (req, res, next) => {
     try {
         const result = await Org.find({ "email": req.body.email ,"password":req.body.password});
         if (result.length==0) {
@@ -28,14 +29,16 @@ const loginOrg = async (req, res) => {
         }
         const token = jwt.sign({ email: req.body.email }, process.env.access_Token_Key ,{ expiresIn: process.env.accessTokenExpire }); // Use your own secret
         const refreshToken = jwt.sign({ username: req.body.email }, process.env.refresh_Token_key,{ expiresIn: process.env.refreshTokenExpire });
+        res.cookie('token', token, { httpOnly: true, secure: false });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: false });
         res.status(200).json({'message':"success", 'token':token,"refreshToken":refreshToken });
         //res.status(200).json("Success Login");
     } catch (err) {
-        res.status(500).json({ msg: err.message })
+        next(err)
     }
 }
 
-const refreshtoken = async (req, res) => {
+const refreshtoken = async (req, res, next) => {
     
     try {
         const { refreshToken } = req.body;
@@ -54,11 +57,11 @@ const refreshtoken = async (req, res) => {
             res.json({ accessToken });
         });
     } catch (err) {
-        res.status(500).json({ msg: err.message })
+        next(err)
     }
 }
 
-const getSingleOrg = async (req, res) => {
+const getSingleOrg = async (req, res, next) => {
     try {
         const { id } = req.params;
         const result = await Org.findById(id);
@@ -68,11 +71,11 @@ const getSingleOrg = async (req, res) => {
         }
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({ msg: err.message })
+        next(err)
     }
 }
 
-const deleteOrg = async (req, res) => {
+const deleteOrg = async (req, res, next) => {
     try {
         const { id } = req.params;
         const result = await Org.findByIdAndDelete(id);
@@ -82,13 +85,13 @@ const deleteOrg = async (req, res) => {
         res.status(200).json("Org deleted");
 
     } catch (error) {
-        res.status(500).json({ msg: error.message })
+        next(err)
     }
 
 }
 
 
-const updateOrg = async (req, res) => {
+const updateOrg = async (req, res, next) => {
     try {
         const { id } = req.params;
         const result = await Org.findByIdAndUpdate(
@@ -99,11 +102,11 @@ const updateOrg = async (req, res) => {
         }
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ msg: error.message })
+        next(err)
     }
 }
 
-const updateOrgSingleField = async (req, res) => {
+const updateOrgSingleField = async (req, res, next) => {
     try {
         const { id } = req.params;
         const result = await Org.findByIdAndUpdate(
@@ -114,7 +117,7 @@ const updateOrgSingleField = async (req, res) => {
         }
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ msg: error.message })
+        next(err)
     }
 }
 module.exports = { createOrg, getOrg, getSingleOrg, deleteOrg,updateOrg,updateOrgSingleField,loginOrg,refreshtoken }

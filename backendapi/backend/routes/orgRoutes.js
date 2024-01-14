@@ -5,7 +5,7 @@ const router=express.Router()
 
 
 // create a task
-router.post('/api/org',createOrg)
+router.post('/api/register',createOrg)
 
 //refresh token
 router.post('/refresh',refreshtoken)

@@ -1,6 +1,6 @@
 const express=require("express");
 const Task = require("../models/taskModel");
-const { authenticateToken } = require("../../middleware/authMiddleware");
+const { authenticateToken } = require("../middleware/authMiddleware");
 const { createTask, getTask, getSingleTask, deleteTask, updateTask, updateTaskSingleField } = require("../controllers/taskController");
 const router=express.Router()
 

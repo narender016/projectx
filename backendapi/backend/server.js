@@ -7,12 +7,15 @@ const taskRoutes=require('./routes/taskRoutes');
 const orgRoutes=require('./routes/orgRoutes');
 const batchRoutes=require('./routes/batchRoutes');
 const teacherRoutes=require('./routes/teacherRoutes');
-const cors = require('cors')
-const app=express();
+const cors = require('cors');
+const errorHandler=require('./middleware/errorMiddleware');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const app = express();
 
 
 const corsOptions = {
-    origin: ['http://localhost:4200', 'https://nodeapi-9h7z.onrender.com'],// Replace with the allowed origin
+    origin: ['http://localhost:5173', 'https://nodeapi-9h7z.onrender.com'],// Replace with the allowed origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   };
 
@@ -21,6 +24,9 @@ const corsOptions = {
 //Middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(bodyParser.json());
+ app.use(cookieParser());
+
 app.use(taskRoutes);
 app.use(orgRoutes);
 app.use(batchRoutes);
@@ -32,20 +38,8 @@ app.get('/',(req,res)=>{
 res.send("Server Running..");
 })
 
-// app.post('/Refreshtoken', (req, res) => {
-//     debugger
-//     const { refreshToken } = req.body;
-//     if (!refreshToken) {
-//         return res.sendStatus(401);
-//     }
-//     jwt.verify(refreshToken, 'refreshkey', (err, user) => {
-//         if (err) {
-//             return res.sendStatus(403);
-//         }
-//         const accessToken = jwt.sign({ username: 'test' }, "refreshkey", { expiresIn: '20m' });//you have to get username/email from token 
-//         res.json({ accessToken });
-//     });
-// });
+// Error Middleware
+app.use(errorHandler)
 
 const PORT=process.env.PORT || 5000;
 
