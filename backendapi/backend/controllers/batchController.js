@@ -1,24 +1,24 @@
 const Batch = require("../models/batchModel");
 
-const createBatch = async (req, res) => {
+const createBatch = async (req, res, next) => {
   try {
     const data = await Batch.create(req.body);
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ msg: err.message });
+    next(err)
   }
 };
 
-const getBatch = async (req, res) => {
+const getBatch = async (req, res, next) => {
   try {
     const data = await Batch.find();
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ msg: err.message });
+    next(err)
   }
 };
 
-const updateBatchSingleField = async (req, res) => {
+const updateBatchSingleField = async (req, res, next) => {
   try {
     const { id } = req.params;
     // const data = await Batch.findByIdAndUpdate(
@@ -43,7 +43,7 @@ const updateBatchSingleField = async (req, res) => {
 
     return res.status(200).json({ msg: "Student added to batch successfully" });
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    next(err)
   }
 };
 

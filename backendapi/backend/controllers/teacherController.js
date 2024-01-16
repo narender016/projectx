@@ -1,6 +1,6 @@
 const Teacher = require("../models/teacherModel");
 
-const createTeacher = async (req, res) => {
+const createTeacher = async (req, res,next) => {
     // try {
     //     const data = await Teacher.create(req.body);
     //     res.status(200).json(data);
@@ -22,21 +22,21 @@ const createTeacher = async (req, res) => {
 
         res.status(200).json(newTeacher);
     } catch (err) {
-        res.status(500).json({ msg: err.message });
+        next(err)
     }
 }
 
 
-const getTeacher = async (req, res) => {
+const getTeacher = async (req, res,next) => {
     try {
         const data = await Teacher.find();
         res.status(200).json(data);
     } catch (err) {
-        res.status(500).json({ msg: err.message })
+        next(err)
     }
 }
 
-const updateTeacherSingleField = async (req, res) => {
+const updateTeacherSingleField = async (req, res,next) => {
     try {
         const { id } = req.params;
         const data = await Teacher.findByIdAndUpdate(
@@ -47,7 +47,7 @@ const updateTeacherSingleField = async (req, res) => {
         }
         res.status(200).json(data);
     } catch (error) {
-        res.status(500).json({ msg: error.message })
+        next(err)
     }
 }
 
