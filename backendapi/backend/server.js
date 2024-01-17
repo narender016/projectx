@@ -7,6 +7,7 @@ const taskRoutes=require('./routes/taskRoutes');
 const orgRoutes=require('./routes/orgRoutes');
 const batchRoutes=require('./routes/batchRoutes');
 const teacherRoutes=require('./routes/teacherRoutes');
+const studentRoutes=require('./routes/studentRoutes');
 const cors = require('cors');
 const errorHandler=require('./middleware/errorMiddleware');
 const bodyParser = require('body-parser');
@@ -31,6 +32,7 @@ app.use(taskRoutes);
 app.use(orgRoutes);
 app.use(batchRoutes);
 app.use(teacherRoutes);
+app.use(studentRoutes);
 
 
 //routes

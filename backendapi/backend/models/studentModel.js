@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const studentSchema = mongoose.Schema(
   {
-    fullName: {
+    name: {
       type: String,
       required: [true, "Please add Name"]
     },
@@ -22,19 +22,25 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add address"]
     },
-    parentGuardian: {
-      name: String,
-      email: String,
-      mobile: String,
-      relationship: String
-    },
-    emergencyContact: {
-      name: String,
-      mobile: String
-    },
+    // parentGuardian: {
+    //   name: String,
+    //   email: String,
+    //   mobile: String,
+    //   relationship: String
+    // },
+    // emergencyContact: {
+    //   name: String,
+    //   mobile: String
+    // },
     email: {
       type: String,
-      required: [true, "Please add email"]
+      required: [true, "Please add email"],
+      unique:true,
+            trim:true,
+            match:[
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                "please enter a valid email"
+            ]
     },
     mobile: {
       type: String, // Change type to String

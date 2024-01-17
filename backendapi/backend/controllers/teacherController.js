@@ -10,12 +10,12 @@ const createTeacher = async (req, res,next) => {
 
     try {
         // Check if a teacher with the same email already exists
-        const existingTeacher = await Teacher.findOne({ "email": req.body.email, "mobile":req.body.mobile });
+        // const existingTeacher = await Teacher.findOne({ "email": req.body.email, "mobile":req.body.mobile });
 
-        if (existingTeacher) {
-            // If a teacher with the same email exists, return an error response
-            return res.status(400).json({ msg: 'Teacher with this email already exists' });
-        }
+        // if (existingTeacher) {
+        //     // If a teacher with the same email exists, return an error response
+        //     return res.status(400).json({ msg: 'Teacher with this email already exists' });
+        // }
 
         // If no teacher with the same email exists, create a new teacher
         const newTeacher = await Teacher.create(req.body);
