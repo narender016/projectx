@@ -16,7 +16,7 @@ const app = express();
 
 
 const corsOptions = {
-    origin: ['http://localhost:5173', 'https://nodeapi-9h7z.onrender.com'],// Replace with the allowed origin
+    origin: ['http://localhost:5173', 'https://nodeapi-9h7z.onrender.com', 'https://timedoc-32x45gd25-techalam.vercel.app'],// Replace with the allowed origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   };
 
