@@ -9,7 +9,7 @@ const router=express.Router()
 router.post('/api/tasks',authenticateToken,createTask)
 
 // Get/read all task
-router.get('/api/tasks',authenticateToken,getTask)
+router.get('/api/tasks',getTask)
 
 //get a single task
 router.get('/api/tasks/:id',authenticateToken,getSingleTask)
